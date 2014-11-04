@@ -41,7 +41,8 @@ $(document).ready(function() {
 		});
 	});
 
-	$.ajax({
+	var populateUsingAJAX = function() {	
+		$.ajax({
 		url: 'test.json',
 		type: "GET",
 		dataType: "json",
@@ -50,5 +51,9 @@ $(document).ready(function() {
 				addItemToList(response.tasks[i]);
 			}
 		}
-	});
+	})};
+
+	populateUsingAJAX();
+
+
 });
