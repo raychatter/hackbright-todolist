@@ -5,3 +5,7 @@
 .glyphicon {
 	margin-right: .5em;
 }
+
+.completed {
+	text-decoration: line-through;
+}

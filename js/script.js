@@ -1,6 +1,21 @@
 $(document).ready(function() {
+	var populateUsingAJAX = function() {
+		$.ajax({
+			url: 'test.json',
+			type: "GET",
+			dataType: "json",
+			success: function(response) {
+				for(var i=0; i<response.tasks.length; i++) {
+					addItemToList(response.tasks[i]);
+				}
+			}
+		});
+	};
+	populateUsingAJAX();
+
 	var addItemToList = function(item) {
-		var $item = $('<span><input type="checkbox"x class="item"/><label>'+item+'</label><br/></span>');	
+		var $item = $('<span><input type="checkbox" class="item"/>'+item+'<br/></span>');	
+		// var $item = $('<span><input type="checkbox" class="item"/><label>'+item+'</label><br/></span>');	
 		$('#todo-list').append($item);
 	};
 
@@ -14,7 +29,9 @@ $(document).ready(function() {
 
 	$('#remove-item-button').on('click', function(e) {
 		e.preventDefault();
-		$('.item:checked').closest('span').remove();
+		$('.item:checked').closest('span').addClass("completed");
+		$('.item:checked').remove();
+		// $('.item:checked').closest('span').remove();
 	});
 
 	$('#ajax-button').one('click', function() {
@@ -28,16 +45,5 @@ $(document).ready(function() {
 		});
 	});
 
-	$('#populate-list-button').one('click', function() {
-		$.ajax({
-			url: 'test.json',
-			type: "GET",
-			dataType: "json",
-			success: function(response) {
-				for(var i=0; i<response.tasks.length; i++) {
-					addItemToList(response.tasks[i]);
-				}
-			}
-		});
-	});
+	$('#populate-list-button').one('click', populateUsingAJAX);
 });
